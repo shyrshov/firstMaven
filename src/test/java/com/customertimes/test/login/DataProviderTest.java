@@ -1,5 +1,6 @@
 package com.customertimes.test.login;
 
+import com.customertimes.dataprovider.DataProviderClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -9,8 +10,7 @@ public class DataProviderTest {
 
     @Test(dataProvider = "data-provider", dataProviderClass = DataProviderClass.class)
 
-    public void testMethod(int data)
-    {
+    public void testGeneratedValues(int data) {
         SoftAssert softAssert = new SoftAssert();
         Random rand = new Random();
         int random = rand.nextInt(10);

@@ -1,4 +1,4 @@
-package com.customertimes.test.login;
+package com.customertimes.dataprovider;
 
 import org.testng.annotations.DataProvider;
 
