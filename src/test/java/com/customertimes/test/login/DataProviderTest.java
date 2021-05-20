@@ -9,7 +9,6 @@ import java.util.Random;
 public class DataProviderTest {
 
     @Test(dataProvider = "data-provider", dataProviderClass = DataProviderClass.class)
-
     public void testGeneratedValues(int data) {
         SoftAssert softAssert = new SoftAssert();
         Random rand = new Random();
