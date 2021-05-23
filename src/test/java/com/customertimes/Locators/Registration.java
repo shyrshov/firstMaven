@@ -2,7 +2,7 @@ package com.customertimes.Locators;
 
 public class Registration {
     private String UserRegistrationCss = "div h1";
-    private String UserRegistrationXpath = "//mat-card/h1";
+    private String UserRegistrationXpath = "//div/h1";
     private String EmailCss = "input#emailControl";
     private String EmailXpath = "//input[@id='emailControl']";
     private String PasswordCss =  "input#passwordControl";
@@ -23,9 +23,20 @@ public class Registration {
     private String SlideBarTextXpath = "//span[@class='mat-slide-toggle-content']";
     private String ProgressBarTextCss =  "mat-progress-bar div div:first-of-type";
     private String ProgressBarTextXpath = "//mat-progress-bar/div/div[1]";
-
-
-
+    private String SecurityQuestionCss =  "[name=securityQuestion]";
+    private String SecurityQuestionXpath = "//*[@name='securityQuestion']";
+    private String ArrowDownCss =  ".mat-select-arrow-wrapper.ng-tns-c140-39";
+    private String ArrowDownXpath = "//*[@class='mat-select-arrow-wrapper ng-tns-c140-39']";
+    private String AnswerCss =  "input#securityAnswerControl";
+    private String AnswerXpath = "//input[@id='securityAnswerControl']";
+    private String RegisterButtonCss =  "button#registerButton";
+    private String RegisterButtonXpath = "//button[@id='registerButton']";
+    private String RegisterIconCss =  "button#registerButton .material-icons";
+    private String RegisterIconXpath = "//button[@id='registerButton']//i[@class='material-icons']";
+    private String RegisterTextCss =  "button#registerButton span.mat-button-wrapper";
+    private String RegisterTextXpath = "//button[@id='registerButton']/span[@class='mat-button-wrapper']";
+    private String LoginCss =  ".primary-link";
+    private String LoginXpath = "//*[@class='primary-link']";
 
 
 }
