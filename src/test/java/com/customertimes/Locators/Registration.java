@@ -1,8 +1,8 @@
 package com.customertimes.Locators;
 
 public class Registration {
-    private String UserRegistrationCss = "div h1";
-    private String UserRegistrationXpath = "//div/h1";
+    private String UserRegistrationHeaderCss = "div h1";
+    private String UserRegistrationHeaderXpath = "//div/h1";
     private String EmailCss = "input#emailControl";
     private String EmailXpath = "//input[@id='emailControl']";
     private String PasswordCss =  "input#passwordControl";
@@ -17,16 +17,16 @@ public class Registration {
     private String RepeatPasswordXpath = "//input[@id='repeatPasswordControl']";
     private String RepeatPasswordCounterCss =  "#mat-hint-2";
     private String RepeatPasswordCounterXpath = "//*[@id='mat-hint-2']";
-    private String SlideBarCss =  "label .mat-slide-toggle-bar";
-    private String SlideBarXpath = "//label/div[@class='mat-slide-toggle-bar']";
+    private String SlideBarCss =  "#mat-slide-toggle-1-input";
+    private String SlideBarXpath = "//*[@id='#mat-slide-toggle-1-input']";
     private String SlideBarTextCss =  "span.mat-slide-toggle-content";
     private String SlideBarTextXpath = "//span[@class='mat-slide-toggle-content']";
     private String ProgressBarTextCss =  "mat-progress-bar div div:first-of-type";
     private String ProgressBarTextXpath = "//mat-progress-bar/div/div[1]";
     private String SecurityQuestionCss =  "[name=securityQuestion]";
     private String SecurityQuestionXpath = "//*[@name='securityQuestion']";
-    private String ArrowDownCss =  ".mat-select-arrow-wrapper.ng-tns-c140-39";
-    private String ArrowDownXpath = "//*[@class='mat-select-arrow-wrapper ng-tns-c140-39']";
+    private String ArrowDownCss =  "[class*=mat-select-arrow-wrapper]";
+    private String ArrowDownXpath = "//*[contains(@class, 'mat-select-arrow-wrapper')]";
     private String AnswerCss =  "input#securityAnswerControl";
     private String AnswerXpath = "//input[@id='securityAnswerControl']";
     private String RegisterButtonCss =  "button#registerButton";

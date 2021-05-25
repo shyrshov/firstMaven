@@ -1,10 +1,10 @@
 package com.customertimes.Locators;
 
 public class Profile {
-    private String UserProfileCss = "div h1";
-    private String UserRegistrationXpath = "//div/h1";
+    private String UserProfileHeaderCss = "div h1";
+    private String UserProfileHeaderXpath = "//div/h1";
     private String EmailLabelCss = ".mdl-textfield__label[for=email]";
-    private String EmailLabelXpath = "//div/h1";
+    private String EmailLabelXpath = "//*[@class='mdl-textfield__label' and @for='email']";
     private String EmailCss = "#email";
     private String EmailXpath = "//*[@id='email']";
     private String UsernameLabelCss = "label[for=username]";
