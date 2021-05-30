@@ -44,7 +44,7 @@ public class JuiceShopSignUpTest extends BaseTest {
     }
 
     @Test
-    public void userCanSignUpToJuiceShop() throws InterruptedException {
+    public void userCanSignUpToJuiceShop() {
 
         getWebDriver().findElement(By.id("navbarAccount")).click();
         getWebDriver().findElement(By.id("navbarLoginButton")).click();

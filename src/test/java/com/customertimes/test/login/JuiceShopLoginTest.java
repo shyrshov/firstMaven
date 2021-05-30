@@ -32,7 +32,7 @@ public class JuiceShopLoginTest extends BaseTest {
     }
 
     @Test
-    public void userCanLoginToJuiceShop() throws InterruptedException {
+    public void userCanLoginToJuiceShop() {
 
         getWebDriver().findElement(By.id("navbarAccount")).click();
         getWebDriver().findElement(By.id("navbarLoginButton")).click();

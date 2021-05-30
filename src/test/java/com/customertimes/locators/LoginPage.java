@@ -1,4 +1,4 @@
-package com.customertimes.Locators;
+package com.customertimes.locators;
 
 public class LoginPage {
     private String LoginPageHeaderCss = "mat-card h1";

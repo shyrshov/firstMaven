@@ -1,4 +1,4 @@
-package com.customertimes.Locators;
+package com.customertimes.locators;
 
 public class Registration {
     private String UserRegistrationHeaderCss = "div h1";

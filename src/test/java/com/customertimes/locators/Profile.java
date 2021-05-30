@@ -1,4 +1,4 @@
-package com.customertimes.Locators;
+package com.customertimes.locators;
 
 public class Profile {
     private String UserProfileHeaderCss = "div h1";
