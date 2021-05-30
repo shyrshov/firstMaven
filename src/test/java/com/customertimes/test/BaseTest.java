@@ -9,7 +9,6 @@ import org.testng.annotations.BeforeSuite;
 public class BaseTest {
 
     protected WebDriver driver;
-    protected final static String BASE_URL = "http://beeb0b73705f.sn.mynetname.net:3000/";
 
     @BeforeSuite
     public void setup() throws InterruptedException {

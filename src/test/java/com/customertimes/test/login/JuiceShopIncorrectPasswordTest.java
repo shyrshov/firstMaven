@@ -2,23 +2,29 @@ package com.customertimes.test.login;
 
 import com.customertimes.framework.driver.WebdriverRunner;
 import com.customertimes.test.BaseTest;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.jsoup.Connection;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import static com.customertimes.framework.driver.WebdriverRunner.getWebDriver;
 
-public class JuiceShopLoginTest extends BaseTest {
+public class JuiceShopIncorrectPasswordTest extends BaseTest {
 
     String userEmail;
+    String userPassword;
+    String invalidCredentialsErrorText;
 
     @BeforeClass
-    public void setup() throws InterruptedException {
+    public void setup() {
         getWebDriver().get("http://beeb0b73705f.sn.mynetname.net:3000/");
-        Thread.sleep(2000);
         getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
         userEmail = "andrii@gmail.com";
+        userPassword = RandomStringUtils.random(10, true, true);
+        invalidCredentialsErrorText = "Invalid email or password.";
     }
 
     @AfterClass
@@ -27,7 +33,7 @@ public class JuiceShopLoginTest extends BaseTest {
     }
 
     @Test
-    public void userCanLoginToJuiceShop() throws InterruptedException {
+    public void userFillIncorrectPasswordToLoginForm() throws InterruptedException {
 
         getWebDriver().findElement(By.id("navbarAccount")).click();
         getWebDriver().findElement(By.id("navbarLoginButton")).click();
@@ -36,21 +42,14 @@ public class JuiceShopLoginTest extends BaseTest {
         getWebDriver().findElement(By.id("email")).sendKeys(userEmail);
 
         getWebDriver().findElement(By.id("password")).clear();
-        getWebDriver().findElement(By.id("password")).sendKeys("123456789");
+        getWebDriver().findElement(By.id("password")).sendKeys(userPassword);
 
-        getWebDriver().findElement(By.id("loginButton")).click();
-
-        getWebDriver().findElement(By.id("navbarAccount")).click();
+        getWebDriver().findElement(By.cssSelector("button#loginButton")).click();
         Thread.sleep(1000);
 
-        String actualNameText = getWebDriver().findElement(By.cssSelector("button[aria-label='Go to user profile'] span")).getText();
+        String invalidCredentialsErrorActualText = getWebDriver().findElement(By.cssSelector("div [class='error ng-star-inserted']")).getText();
 
-        Assert.assertEquals(actualNameText, userEmail, "User name does not match");
-
-
-
-
-
+        Assert.assertEquals(invalidCredentialsErrorText, invalidCredentialsErrorActualText, "Invalid email or password error message doesn't match");
     }
 
 }
