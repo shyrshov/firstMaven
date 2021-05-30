@@ -5,6 +5,9 @@ import com.customertimes.test.BaseTest;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.jsoup.Connection;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -17,10 +20,13 @@ public class JuiceShopIncorrectPasswordTest extends BaseTest {
     String userEmail;
     String userPassword;
     String invalidCredentialsErrorText;
+    WebDriverWait wait;
 
     @BeforeClass
     public void setup() {
+        wait = new WebDriverWait(getWebDriver(), 5);
         getWebDriver().get("http://beeb0b73705f.sn.mynetname.net:3000/");
+        wait.until(ExpectedConditions.visibilityOf(getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']"))));
         getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
         userEmail = "andrii@gmail.com";
         userPassword = RandomStringUtils.random(10, true, true);
@@ -45,8 +51,7 @@ public class JuiceShopIncorrectPasswordTest extends BaseTest {
         getWebDriver().findElement(By.id("password")).sendKeys(userPassword);
 
         getWebDriver().findElement(By.cssSelector("button#loginButton")).click();
-        Thread.sleep(1000);
-
+        wait.until(ExpectedConditions.textToBe(By.cssSelector("div [class='error ng-star-inserted']"), invalidCredentialsErrorText));
         String invalidCredentialsErrorActualText = getWebDriver().findElement(By.cssSelector("div [class='error ng-star-inserted']")).getText();
 
         Assert.assertEquals(invalidCredentialsErrorText, invalidCredentialsErrorActualText, "Invalid email or password error message doesn't match");

@@ -35,11 +35,11 @@ public class MyFirstTest extends BaseTest {
     {
 
         driver.get("https://github.com");
-        try {
-            Thread.sleep(1_000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(1_000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         String expectedTitle = "GitHub: Where the world builds software · GitHub";
         String actualTitle = driver.getTitle();

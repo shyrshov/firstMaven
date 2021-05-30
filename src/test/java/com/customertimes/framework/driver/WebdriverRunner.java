@@ -35,7 +35,7 @@ public class WebdriverRunner {
 
     public static void closeWebdriver() {
         if (driver.get() != null) {
-            driver.get().close();
+            driver.get().quit();
             driver.remove();
         }
     }
