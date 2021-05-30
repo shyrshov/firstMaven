@@ -15,7 +15,7 @@ public class JuiceShopLoginTest extends BaseTest {
 
     @BeforeClass
     public void setup() throws InterruptedException {
-        getWebDriver().get("http://beeb0b73705f.sn.mynetname.net:3000/");
+        getWebDriver().get(BASE_URL);
         Thread.sleep(2000);
         getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
         userEmail = "andrii@gmail.com";
