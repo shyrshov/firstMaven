@@ -42,7 +42,7 @@ public class ProductAddToCart extends BaseTest {
     }
 
     @Test
-    public void userCanAddProductToCart() throws InterruptedException {
+    public void userCanAddProductToCart() {
 
         getWebDriver().findElement(By.id("navbarAccount")).click();
         getWebDriver().findElement(By.id("navbarLoginButton")).click();
