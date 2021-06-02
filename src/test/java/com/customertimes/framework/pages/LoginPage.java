@@ -19,7 +19,7 @@ public class LoginPage extends AbstractPage {
 
     @Override
     public void openPage() {
-//        driver.get("url/login");
+        driver.get("url/login");
     }
 
     public void clickOnAccountButton() {
@@ -49,13 +49,17 @@ public class LoginPage extends AbstractPage {
 
     public String getActualNameText(String currentEmail) {
         wait.until(ExpectedConditions.textToBe(By.cssSelector("button[aria-label='Go to user profile'] span"), currentEmail));
-        String actualNameText = getWebDriver().findElement(By.cssSelector("button[aria-label='Go to user profile'] span")).getText();
+        String actualNameText = driver.findElement(By.cssSelector("button[aria-label='Go to user profile'] span")).getText();
         return actualNameText;
     }
 
     public String getInvalidCredentialsErrorActualText(String invalidCredentialsErrorText) {
         wait.until(ExpectedConditions.textToBe(By.cssSelector("div [class='error ng-star-inserted']"), invalidCredentialsErrorText));
-        String invalidCredentialsErrorActualText = getWebDriver().findElement(By.cssSelector("div [class='error ng-star-inserted']")).getText();
+        String invalidCredentialsErrorActualText = driver.findElement(By.cssSelector("div [class='error ng-star-inserted']")).getText();
         return invalidCredentialsErrorActualText;
+    }
+
+    public void clickNotYetACustomerButton() {
+        driver.findElement(By.cssSelector("[href='#/register']")).click();
     }
 }

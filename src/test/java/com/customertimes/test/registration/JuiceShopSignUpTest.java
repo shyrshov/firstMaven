@@ -1,9 +1,14 @@
 package com.customertimes.test.registration;
 
 import com.customertimes.framework.driver.WebdriverRunner;
+import com.customertimes.framework.pages.LoginPage;
+import com.customertimes.framework.pages.RegistrationPage;
+import com.customertimes.model.Customer;
 import com.customertimes.test.BaseTest;
+import com.customertimes.testData.TestData;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
@@ -11,29 +16,31 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.concurrent.TimeUnit;
+
 import static com.customertimes.framework.driver.WebdriverRunner.getWebDriver;
 
 public class JuiceShopSignUpTest extends BaseTest {
 
-    String userEmail;
-    String userPassword;
-    String answerSecurityQuestion;
-    String registrationSuccessText;
+    LoginPage loginPage;
     WebDriverWait wait;
+    TestData testData;
+    RegistrationPage registrationPage;
+    Customer customer;
     SoftAssert softAssert;
 
 
     @BeforeClass
-    public void setup() {
-        wait = new WebDriverWait(getWebDriver(), 7);
-        getWebDriver().get("http://beeb0b73705f.sn.mynetname.net:3000/");
-        wait.until(ExpectedConditions.visibilityOf(getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']"))));
-        getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
-        userEmail = RandomStringUtils.random(10, true, false) + "@gmail.com";
-        userPassword = RandomStringUtils.random(10, true, true);
-        answerSecurityQuestion = RandomStringUtils.random(10, true, false);
-        registrationSuccessText = "Registration completed successfully. You can now log in.";
+    public void setupDataToJuiceShop() {
+        driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
         softAssert = new SoftAssert();
+        wait = new WebDriverWait(driver, 5);
+        loginPage = new LoginPage(driver);
+        registrationPage = new RegistrationPage(driver);
+        testData = new TestData();
+        customer = Customer.newBuilder().withName(testData.getIncorrectUserEmail()).withPassword(testData.getIncorrectUserPassword()).build();
     }
 
     @AfterClass
@@ -44,59 +51,49 @@ public class JuiceShopSignUpTest extends BaseTest {
     @Test
     public void userCanSignUpToJuiceShop() {
 
-        getWebDriver().findElement(By.id("navbarAccount")).click();
-        getWebDriver().findElement(By.id("navbarLoginButton")).click();
+        loginPage.navigateToLoginPage();
 
-        getWebDriver().findElement(By.cssSelector("[href='#/register']")).click();
+        loginPage.clickNotYetACustomerButton();
 
-        getWebDriver().findElement(By.id("emailControl")).clear();
-        getWebDriver().findElement(By.id("emailControl")).sendKeys(userEmail);
+        registrationPage.enterEmail(customer.getEmail());
 
-        getWebDriver().findElement(By.id("passwordControl")).clear();
-        getWebDriver().findElement(By.id("passwordControl")).sendKeys(userPassword);
+        registrationPage.enterPassword(customer.getPassword());
 
-        getWebDriver().findElement(By.id("repeatPasswordControl")).clear();
-        getWebDriver().findElement(By.id("repeatPasswordControl")).sendKeys(userPassword);
+        registrationPage.enterRepeatPassword(customer.getPassword());
 
-        getWebDriver().findElement(By.cssSelector("[name='securityQuestion']")).click();
-        getWebDriver().findElement(By.cssSelector("div [role=listbox] mat-option")).click();
+        registrationPage.chooseSecurityQuestion();
 
-        getWebDriver().findElement(By.id("securityAnswerControl")).clear();
-        getWebDriver().findElement(By.id("securityAnswerControl")).sendKeys(answerSecurityQuestion);
+        registrationPage.enterAnswerSecurityQuestion(testData.getAnswerSecurityQuestion());
 
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("simple-snack-bar div button .mat-button-wrapper")));
+        registrationPage.waitToLanguagePopUpDisappear();
 
-        getWebDriver().findElement(By.id("registerButton")).click();
+        registrationPage.clickRegisterButton();
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("simple-snack-bar span")));
+        registrationPage.waitUntilRegistrationSuccessPopUpAppear();
 
-        String registrationActualText = getWebDriver().findElement(By.cssSelector("simple-snack-bar span")).getAttribute("textContent");
+        String registrationSuccessActualText = registrationPage.getRegistrationSuccessActualText();
 
-        softAssert.assertEquals(registrationActualText, registrationSuccessText, "Registration wasn't successful");
+        softAssert.assertEquals(registrationSuccessActualText, testData.getRegistrationSuccessText(), "Registration wasn't successful");
 
-        getWebDriver().findElement(By.id("navbarAccount")).click();
-        getWebDriver().findElement(By.id("navbarLoginButton")).click();
+        loginPage.navigateToLoginPage();
 
-        getWebDriver().findElement(By.id("email")).clear();
-        getWebDriver().findElement(By.id("email")).sendKeys(userEmail);
+        loginPage.enterEmail(customer.getEmail());
 
-        getWebDriver().findElement(By.id("password")).clear();
-        getWebDriver().findElement(By.id("password")).sendKeys(userPassword);
+        loginPage.enterPassword(customer.getPassword());
 
-        getWebDriver().findElement(By.id("loginButton")).click();
+        loginPage.clickOnLoginButton();
 
-        getWebDriver().findElement(By.id("navbarAccount")).click();
+        loginPage.clickOnAccountButton();
 
-        wait.until(ExpectedConditions.textToBe(By.cssSelector("button[aria-label='Go to user profile'] span"), userEmail));
+        String actualNameText = loginPage.getActualNameText(customer.getEmail());
 
-        String actualNameText = getWebDriver().findElement(By.cssSelector("button[aria-label='Go to user profile'] span")).getText();
-
-        softAssert.assertEquals(actualNameText, userEmail, "User name does not match");
+        softAssert.assertEquals(actualNameText, customer.getEmail(), "User name does not match");
 
         softAssert.assertAll();
 
-
     }
+
+
 
 
 }

@@ -1,7 +1,11 @@
 package com.customertimes.test.registration;
 
 import com.customertimes.framework.driver.WebdriverRunner;
+import com.customertimes.framework.pages.LoginPage;
+import com.customertimes.framework.pages.RegistrationPage;
+import com.customertimes.model.Customer;
 import com.customertimes.test.BaseTest;
+import com.customertimes.testData.TestData;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,23 +15,27 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.TimeUnit;
+
 import static com.customertimes.framework.driver.WebdriverRunner.getWebDriver;
 
 public class JuiceShopShortPasswordTest extends BaseTest{
 
-    String userPassword;
-    String passwordLengthErrorText;
+    LoginPage loginPage;
     WebDriverWait wait;
+    TestData testData;
+    RegistrationPage registrationPage;
 
 
     @BeforeClass
-    public void setup() {
-        wait = new WebDriverWait(getWebDriver(), 5);
-        getWebDriver().get("http://beeb0b73705f.sn.mynetname.net:3000/");
-        wait.until(ExpectedConditions.visibilityOf(getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']"))));
-        getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
-        userPassword = RandomStringUtils.random(3, true, true);
-        passwordLengthErrorText = "Password must be 5-20 characters long.";
+    public void setupDataToJuiceShop() {
+        driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
+        wait = new WebDriverWait(driver, 5);
+        loginPage = new LoginPage(driver);
+        registrationPage = new RegistrationPage(driver);
+        testData = new TestData();
 
     }
 
@@ -39,20 +47,20 @@ public class JuiceShopShortPasswordTest extends BaseTest{
     @Test
     public void userFillShortPasswordToSignUpForm() {
 
-        getWebDriver().findElement(By.id("navbarAccount")).click();
-        getWebDriver().findElement(By.id("navbarLoginButton")).click();
+        loginPage.navigateToLoginPage();
 
-        getWebDriver().findElement(By.cssSelector("[href='#/register']")).click();
+        loginPage.clickNotYetACustomerButton();
 
-        getWebDriver().findElement(By.id("passwordControl")).clear();
-        getWebDriver().findElement(By.id("passwordControl")).sendKeys(userPassword);
+        registrationPage.enterPassword(testData.getInvalidUserPassword());
 
-        getWebDriver().findElement(By.cssSelector("h1")).click();
+        registrationPage.clickUserRegistrationTitle();
 
-        String passwordLengthErrorActualText = getWebDriver().findElement(By.cssSelector("mat-error[role='alert']")).getText();
+        String passwordLengthErrorActualText = registrationPage.getPasswordLengthErrorActualText();
 
-        Assert.assertEquals(passwordLengthErrorActualText, passwordLengthErrorText, "Password length validation error text doesn't match");
+        Assert.assertEquals(passwordLengthErrorActualText, testData.getPasswordLengthErrorText(), "Password length validation error text doesn't match");
     }
+
+
 
 
 }
