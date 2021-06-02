@@ -1,6 +1,6 @@
 package com.customertimes.locators;
 
-public class LoginPage {
+public class LoginPageLocators {
     private String LoginPageHeaderCss = "mat-card h1";
     private String LoginPageHeaderXpath = "//h1[text()='Login']";
     private String EmailCss = "[name=email]";

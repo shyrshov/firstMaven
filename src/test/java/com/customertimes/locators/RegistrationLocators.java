@@ -1,6 +1,6 @@
 package com.customertimes.locators;
 
-public class Registration {
+public class RegistrationLocators {
     private String UserRegistrationHeaderCss = "div h1";
     private String UserRegistrationHeaderXpath = "//div/h1";
     private String EmailCss = "input#emailControl";
