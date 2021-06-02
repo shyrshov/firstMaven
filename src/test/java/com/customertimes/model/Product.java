@@ -6,13 +6,13 @@ public class Product {
         private String description;
         private String price;
 
-        public String getEmail() { return title; }
+        public String getTitle() { return title; }
 
-        public void setEmail(String email) { this.title = email; }
+        public void setTitle(String email) { this.title = email; }
 
-        public String getPassword() { return description; }
+        public String getDescription() { return description; }
 
-        public void setPassword(String password) { this.description = password; }
+        public void setDescription(String password) { this.description = password; }
 
         public String getPrice() { return  price; }
 

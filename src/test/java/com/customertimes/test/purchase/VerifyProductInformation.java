@@ -1,7 +1,12 @@
 package com.customertimes.test.purchase;
 
 import com.customertimes.framework.driver.WebdriverRunner;
+import com.customertimes.framework.pages.LoginPage;
+import com.customertimes.framework.pages.ProductListPage;
+import com.customertimes.model.Customer;
+import com.customertimes.model.Product;
 import com.customertimes.test.BaseTest;
+import com.customertimes.testData.TestData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,23 +19,26 @@ import static com.customertimes.framework.driver.WebdriverRunner.getWebDriver;
 
 public class VerifyProductInformation extends BaseTest {
 
-    String productTitle;
-    String productDescription;
-    String productPrice;
+    LoginPage loginPage;
+    ProductListPage productListPage;
     WebDriverWait wait;
     SoftAssert softAssert;
+    TestData testData;
+    Product product;
 
 
     @BeforeClass
-    public void setup() {
+    public void setupDataToJuiceShop() {
+        loginPage = new LoginPage(driver);
+        productListPage = new ProductListPage(driver);
+        testData = new TestData();
         softAssert = new SoftAssert();
         wait = new WebDriverWait(getWebDriver(), 5);
-        getWebDriver().get("http://beeb0b73705f.sn.mynetname.net:3000/");
+        product = product.newBuilder().withTitle("Banana Juice (1000ml)").withDescription("Monkeys love it the most.").withPrice("1.99¤").build();
+        driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
         wait.until(ExpectedConditions.visibilityOf(getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']"))));
-        getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
-        productTitle = "Banana Juice (1000ml)";
-        productDescription = "Monkeys love it the most.";
-        productPrice = "1.99¤";
+        driver.findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
+
     }
 
     @AfterClass
@@ -41,20 +49,21 @@ public class VerifyProductInformation extends BaseTest {
     @Test
     public void userCanOpenProductInformation() throws InterruptedException {
 
-        getWebDriver().findElement(By.xpath("//div[contains(text(), '" + productTitle + "')]")).click();
+        productListPage.clickProduct(product.getTitle());
 
-        String actualTitle = getWebDriver().findElement(By.cssSelector("div h1")).getText();
-        softAssert.assertEquals(actualTitle, productTitle, "Title not equals");
+        String actualTitle = productListPage.getProductTitle();
+        softAssert.assertEquals(actualTitle, product.getTitle(), "Title not equals");
 
-        String actualDescription = getWebDriver().findElement(By.xpath("//div/h1//following-sibling::div[1]")).getText();
-        softAssert.assertEquals(actualDescription, productDescription, "Description not equals");
+        String actualDescription = productListPage.getProductDescription();
+        softAssert.assertEquals(actualDescription, product.getDescription(), "Description not equals");
 
-        String actualPrice = getWebDriver().findElement(By.xpath("//div/p[@class='item-price']")).getText();
-        softAssert.assertEquals(actualPrice,productPrice, "Price not equals");
+        String actualPrice = productListPage.getProductPrice();
+        softAssert.assertEquals(actualPrice, product.getPrice(), "Price not equals");
 
         softAssert.assertAll();
 
     }
+
 
 
 

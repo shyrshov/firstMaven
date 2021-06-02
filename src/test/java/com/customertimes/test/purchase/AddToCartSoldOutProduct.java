@@ -1,9 +1,13 @@
 package com.customertimes.test.purchase;
 
 import com.customertimes.framework.driver.WebdriverRunner;
+import com.customertimes.framework.pages.LoginPage;
+import com.customertimes.framework.pages.ProductListPage;
+import com.customertimes.model.Customer;
+import com.customertimes.test.BaseTest;
+import com.customertimes.testData.TestData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
@@ -14,25 +18,29 @@ import org.testng.asserts.SoftAssert;
 import static com.customertimes.framework.driver.WebdriverRunner.getWebDriver;
 
 
-public class AddToCartSoldOutProduct {
+public class AddToCartSoldOutProduct extends BaseTest {
 
-    String userEmail;
-    String userPassword;
+    LoginPage loginPage;
+    ProductListPage productListPage;
     WebDriverWait wait;
     SoftAssert softAssert;
-    String productOutOfStockText;
-    JavascriptExecutor js = (JavascriptExecutor) getWebDriver();
+    TestData testData;
+    Customer customer;
+    JavascriptExecutor js;
 
     @BeforeClass
-    public void setup() {
-        wait = new WebDriverWait(getWebDriver(), 5);
+    public void setupDataToJuiceShop() {
+        loginPage = new LoginPage(driver);
+        productListPage = new ProductListPage(driver);
+        testData = new TestData();
         softAssert = new SoftAssert();
-        getWebDriver().get("http://beeb0b73705f.sn.mynetname.net:3000/");
+        customer = Customer.newBuilder().withName("andrii@gmail.com").withPassword("123456789").build();
+        js = (JavascriptExecutor) getWebDriver();
+        wait = new WebDriverWait(getWebDriver(), 5);
+        driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
         wait.until(ExpectedConditions.visibilityOf(getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']"))));
-        getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
-        userEmail = "andrii@gmail.com";
-        userPassword = "123456789";
-        productOutOfStockText = "We are out of stock! Sorry for the inconvenience.";
+        driver.findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
+
     }
 
     @AfterClass
@@ -41,42 +49,35 @@ public class AddToCartSoldOutProduct {
     @Test
     public void userCantAddSoldOutProductToCart() {
 
-        getWebDriver().findElement(By.id("navbarAccount")).click();
-        getWebDriver().findElement(By.id("navbarLoginButton")).click();
+        loginPage.navigateToLoginPage();
 
-        getWebDriver().findElement(By.id("email")).clear();
-        getWebDriver().findElement(By.id("email")).sendKeys(userEmail);
+        loginPage.enterEmail(customer.getEmail());
 
-        getWebDriver().findElement(By.id("password")).clear();
-        getWebDriver().findElement(By.id("password")).sendKeys(userPassword);
+        loginPage.enterPassword(customer.getPassword());
 
-        getWebDriver().findElement(By.id("loginButton")).click();
+        loginPage.clickOnLoginButton();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div mat-grid-list")));
+        productListPage.waitForProductListLoad();
 
-        getWebDriver().findElement(By.cssSelector("[aria-label='dismiss cookie message']")).click();
+        productListPage.closeCookieAlert();
 
-        WebElement element = getWebDriver().findElement(By.cssSelector("button[aria-label='Next page']"));
-        js.executeScript("arguments[0].scrollIntoView();", element);
-        getWebDriver().findElement(By.cssSelector("button[aria-label='Next page']")).click();
+        productListPage.moveToNextPage();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector("div[class*=ribbon]"))));
-        getWebDriver().findElement(By.cssSelector("div[class*=ribbon] +div +div button")).click();
+        productListPage.AddToCartOutOFStockProduct();
 
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div[class='cdk-overlay-pane'] snack-bar-container[class*=errorBar] simple-snack-bar span")));
-        String productOutOfStockActualText = getWebDriver().findElement(By.cssSelector("div[class='cdk-overlay-pane'] snack-bar-container[class*=errorBar] simple-snack-bar span")).getAttribute("textContent");
-        softAssert.assertEquals(productOutOfStockActualText, productOutOfStockText, "Product out of stock message is incorrect");
+        String buyProductOutOfStockActualText = productListPage.getProductOutOfStockActualText();
 
-        getWebDriver().findElement(By.cssSelector("button[aria-label='Show the shopping cart']")).click();
+        softAssert.assertEquals(buyProductOutOfStockActualText, testData.getBuyProductOutOfStockText(), "Product out of stock message is incorrect");
 
-        boolean checkoutButton = getWebDriver().findElement(By.id("checkoutButton")).isEnabled();
+        productListPage.clickShoppingCart();
+
+        boolean checkoutButton = productListPage.isCheckoutButtonEnabled();
+
         softAssert.assertEquals(false, checkoutButton, "Checkout button condition is not valid");
 
         softAssert.assertAll();
 
     }
-
-
 
 }
 

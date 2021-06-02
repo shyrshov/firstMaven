@@ -9,6 +9,7 @@ public class TestData {
     private String passwordLengthErrorText = "Password must be 5-20 characters long.";
     private String passwordsDoNotMatchErrorText = "Passwords do not match";
     private String registrationSuccessText = "Registration completed successfully. You can now log in.";
+    private String buyProductOutOfStockText = "We are out of stock! Sorry for the inconvenience.";
     private String incorrectUserEmail = RandomStringUtils.random(7, true, true) + "@gmail.com";
     private String incorrectUserPassword = RandomStringUtils.random(10, true, true);
     private String invalidUserEmail = RandomStringUtils.random(10, true, true);
@@ -26,6 +27,8 @@ public class TestData {
     public String getPasswordsDoNotMatchErrorText() { return passwordsDoNotMatchErrorText; }
 
     public String getRegistrationSuccessText() { return registrationSuccessText; }
+
+    public String getBuyProductOutOfStockText() { return buyProductOutOfStockText; }
 
     public String getIncorrectUserEmail() { return incorrectUserEmail; }
 

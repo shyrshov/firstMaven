@@ -1,7 +1,12 @@
 package com.customertimes.test.purchase;
 
 import com.customertimes.framework.driver.WebdriverRunner;
+import com.customertimes.framework.pages.LoginPage;
+import com.customertimes.framework.pages.ProductListPage;
+import com.customertimes.model.Customer;
+import com.customertimes.model.Product;
 import com.customertimes.test.BaseTest;
+import com.customertimes.testData.TestData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -14,24 +19,28 @@ import static com.customertimes.framework.driver.WebdriverRunner.getWebDriver;
 
 public class ProductAddToCart extends BaseTest {
 
-    String userEmail;
-    String userPassword;
+    LoginPage loginPage;
+    ProductListPage productListPage;
     WebDriverWait wait;
     SoftAssert softAssert;
-    String productTitle;
+    TestData testData;
+    Product product;
+    Customer customer;
     String productPlacedIntoBasketText;
 
     @BeforeClass
-    public void setup() {
-        wait = new WebDriverWait(getWebDriver(), 5);
+    public void setupDataToJuiceShop() {
+        loginPage = new LoginPage(driver);
+        productListPage = new ProductListPage(driver);
+        testData = new TestData();
         softAssert = new SoftAssert();
-        getWebDriver().get("http://beeb0b73705f.sn.mynetname.net:3000/");
+        wait = new WebDriverWait(getWebDriver(), 5);
+        product = product.newBuilder().withTitle("Banana Juice (1000ml)").withDescription("Monkeys love it the most.").withPrice("1.99¤").build();
+        customer = Customer.newBuilder().withName("andrii@gmail.com").withPassword("123456789").build();
+        driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
         wait.until(ExpectedConditions.visibilityOf(getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']"))));
-        getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
-        userEmail = "andrii@gmail.com";
-        userPassword = "123456789";
-        productTitle = "Banana Juice (1000ml)";
-        productPlacedIntoBasketText = "Placed " + productTitle + " into basket.";
+        driver.findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
+        productPlacedIntoBasketText = "Placed " + product.getTitle() + " into basket.";
     }
 
     @AfterClass
@@ -44,34 +53,35 @@ public class ProductAddToCart extends BaseTest {
     @Test
     public void userCanAddProductToCart() {
 
-        getWebDriver().findElement(By.id("navbarAccount")).click();
-        getWebDriver().findElement(By.id("navbarLoginButton")).click();
+        loginPage.navigateToLoginPage();
 
-        getWebDriver().findElement(By.id("email")).clear();
-        getWebDriver().findElement(By.id("email")).sendKeys(userEmail);
+        loginPage.enterEmail(customer.getEmail());
 
-        getWebDriver().findElement(By.id("password")).clear();
-        getWebDriver().findElement(By.id("password")).sendKeys(userPassword);
+        loginPage.enterPassword(customer.getPassword());
 
-        getWebDriver().findElement(By.id("loginButton")).click();
+        loginPage.clickOnLoginButton();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(), '" + productTitle + "')]")));
-        getWebDriver().findElement(By.xpath("//div[contains(text(), '" + productTitle + "')]//following::button[1]")).click();
+        productListPage.productAddToBasket(product.getTitle());
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[contains(text(), 'Placed')]")));
-        String productPlacedIntoBasketActualText = getWebDriver().findElement(By.xpath("//span[contains(text(), 'Placed')]")).getText();
+        String productPlacedIntoBasketActualText = productListPage.getProductPlacedIntoBasketActualText();
+
         softAssert.assertEquals(productPlacedIntoBasketActualText, productPlacedIntoBasketText, "Products added to the cart are not equals");
 
-        getWebDriver().findElement(By.cssSelector("button[aria-label='Show the shopping cart']")).click();
+        productListPage.clickShoppingCart();
 
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//mat-table/mat-row/mat-cell[contains(text(), '" + productTitle + "')]")));
-        String ProductInTheBasketActualText = getWebDriver().findElement(By.xpath("//mat-table/mat-row/mat-cell[contains(text(), '" + productTitle + "')]")).getAttribute("innerText");
-        softAssert.assertEquals(ProductInTheBasketActualText, productTitle, "Products in the basket are not equals");
+        String ProductInTheBasketActualText = productListPage.getProductInBasketActualText(product.getTitle());
 
-        String quantityOfAddedProducts = getWebDriver().findElement(By.xpath("//mat-cell/button/following-sibling::span[1]")).getAttribute("innerText");
+        softAssert.assertEquals(ProductInTheBasketActualText, product.getTitle(), "Products in the basket are not equals");
+
+        String quantityOfAddedProducts = productListPage.getQuantityOfAddedProducts();
+
         softAssert.assertEquals("1", quantityOfAddedProducts, "Quantity of products added to basket not equals");
 
         softAssert.assertAll();
     }
+
+
+
+
 }
 
