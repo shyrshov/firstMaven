@@ -4,10 +4,9 @@ import com.customertimes.framework.driver.WebdriverRunner;
 import com.customertimes.framework.pages.LoginPage;
 import com.customertimes.model.Customer;
 import com.customertimes.test.BaseTest;
-import org.apache.commons.lang3.RandomStringUtils;
+import com.customertimes.testData.TestData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -17,34 +16,29 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.customertimes.framework.driver.WebdriverRunner.getWebDriver;
-
 public class InvalidCredentialsTestRefactored extends BaseTest{
 
     Customer customer;
     LoginPage loginPage;
     WebDriverWait wait;
-    WebDriver driver = WebdriverRunner.getWebDriver(); //я так и не понял почему,
-    // но пока не обьявил и не ициализировал переменную у меня ничего не заработало((
-    // 2 часа ушло пока догнал
-    // Уточнить каким образом это нужно правильно сделать и исправить тест,
-    // кажется в Раннер нужно исправить, не пойму как, что-то из Thread убрать
+    TestData testData;
 
 
     @BeforeClass
-    public void setup() {
+    public void setupDataToJuiceShop() {
         driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
         wait = new WebDriverWait(driver, 5);
         customer = Customer.newBuilder().withName("andrii@gmail.com").withPassword("123456789").build();
         loginPage = new LoginPage(driver);
+        testData = new TestData();
 
     }
 
     @AfterClass
     public void tearDown() {
-        WebdriverRunner.closeWebdriver();
+        WebdriverRunner.closeWebDriver();
     }
 
     @Test(dataProvider = "credentials")
@@ -58,25 +52,28 @@ public class InvalidCredentialsTestRefactored extends BaseTest{
 
         loginPage.clickOnLoginButton();
 
-        String invalidCredentialsErrorActualText = loginPage.getInvalidCredentialsErrorActualText(customer.getInvalidCredentialsErrorText());
+        String invalidCredentialsErrorActualText = loginPage.getInvalidCredentialsErrorActualText(testData.getInvalidCredentialsErrorText());
 
-        Assert.assertEquals(invalidCredentialsErrorActualText, customer.getInvalidCredentialsErrorText(), "Invalid email or password error message doesn't match");
+        Assert.assertEquals(invalidCredentialsErrorActualText, testData.getInvalidCredentialsErrorText(), "Invalid email or password error message doesn't match");
         System.out.println(email + "," + password); //для теста значений
     }
     @DataProvider
     public Object[][] credentials() {
         return new Object[][]{
                 {
+
+                    //Дима сказал что для наборов тестовых данных не обьязательно делать PageObject,
+                        // но я решил таким образом, для лучшей практики
                         customer.getEmail(),
-                        customer.getIncorrectUserPassword()
+                        testData.getIncorrectUserPassword()
                 },
                 {
-                        customer.getIncorrectUserEmail(),
+                        testData.getIncorrectUserEmail(),
                         customer.getPassword()
                 },
                 {
-                        customer.getIncorrectUserEmail(),
-                        customer.getIncorrectUserPassword()
+                        testData.getIncorrectUserEmail(),
+                        testData.getIncorrectUserPassword()
                 }
         };
     }

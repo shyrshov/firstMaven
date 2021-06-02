@@ -18,7 +18,7 @@ public class BaseTest {
 
     @AfterSuite
     public void tearDown() {
-        WebdriverRunner.closeWebdriver();
+        WebdriverRunner.closeWebDriver();
         System.out.println("This is after suite");
     }
 

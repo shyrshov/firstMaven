@@ -3,9 +3,7 @@ package com.customertimes.test.login;
 import com.customertimes.framework.driver.WebdriverRunner;
 import com.customertimes.test.BaseTest;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.jsoup.Connection;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -35,7 +33,7 @@ public class JuiceShopIncorrectPasswordTest extends BaseTest {
 
     @AfterClass
     public void tearDown() {
-        WebdriverRunner.closeWebdriver();
+        WebdriverRunner.closeWebDriver();
     }
 
     @Test

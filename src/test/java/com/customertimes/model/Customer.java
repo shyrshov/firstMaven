@@ -6,9 +6,7 @@ public class Customer {
 
     private String email;
     private String password;
-    private String invalidCredentialsErrorText = "Invalid email or password.";
-    private String incorrectUserEmail = RandomStringUtils.random(7, true, true) + "@gmail.com";
-    private String incorrectUserPassword = RandomStringUtils.random(10, true, true);
+
 
     public String getEmail() { return email; }
 
@@ -18,11 +16,7 @@ public class Customer {
 
     public void setPassword(String password) { this.password = password; }
 
-    public String getInvalidCredentialsErrorText() { return invalidCredentialsErrorText; }
 
-    public String getIncorrectUserEmail() { return incorrectUserEmail; }
-
-    public String getIncorrectUserPassword() { return incorrectUserPassword; }
 
     public static Builder newBuilder() { return new Builder(); }
 

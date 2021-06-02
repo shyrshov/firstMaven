@@ -6,8 +6,6 @@ import com.customertimes.model.Customer;
 import com.customertimes.test.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -16,22 +14,19 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.customertimes.framework.driver.WebdriverRunner.getWebDriver;
-
 public class JuiceShopLoginTest extends BaseTest {
 
     WebDriverWait wait;
     Customer customer;
     LoginPage loginPage;
-    WebDriver driver = WebdriverRunner.getWebDriver(); //я так и не понял почему,
+//    WebDriver driver = WebdriverRunner.getWebDriver(); //я так и не понял почему,
     // но пока не обьявил и не ициализировал переменную у меня ничего не заработало((
     // 2 часа ушло пока догнал
-    // Уточнить каким образом это нужно правильно сделать и исправить тест,
-    // кажется в Раннер нужно исправить, не пойму как, что-то из Thread убрать
+    // Уточнить каким образом это нужно правильно сделать и исправить тест
 
 
     @BeforeClass
-    public void setup() {
+    public void setupDataToJuiceShop() {
 
         driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -44,7 +39,7 @@ public class JuiceShopLoginTest extends BaseTest {
 
     @AfterClass
     public void tearDown() {
-        WebdriverRunner.closeWebdriver();
+        WebdriverRunner.closeWebDriver();
     }
 
     @Test

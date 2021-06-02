@@ -1,6 +1,4 @@
-package com.customertimes.dataprovider;
-
-import org.testng.annotations.DataProvider;
+package com.customertimes.testData;
 
 import org.testng.annotations.DataProvider;
 

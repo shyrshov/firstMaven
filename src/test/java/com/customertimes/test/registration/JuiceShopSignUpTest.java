@@ -6,9 +6,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -40,7 +38,7 @@ public class JuiceShopSignUpTest extends BaseTest {
 
     @AfterClass
     public void tearDown() {
-        WebdriverRunner.closeWebdriver();
+        WebdriverRunner.closeWebDriver();
     }
 
     @Test

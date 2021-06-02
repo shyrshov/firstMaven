@@ -36,7 +36,7 @@ public class AddToCartSoldOutProduct {
     }
 
     @AfterClass
-    public void tearDown() { WebdriverRunner.closeWebdriver(); }
+    public void tearDown() { WebdriverRunner.closeWebDriver(); }
 
     @Test
     public void userCantAddSoldOutProductToCart() {

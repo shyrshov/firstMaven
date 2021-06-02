@@ -35,7 +35,7 @@ public class VerifyProductInformation extends BaseTest {
 
     @AfterClass
     public void tearDown() {
-        WebdriverRunner.closeWebdriver();
+        WebdriverRunner.closeWebDriver();
     }
 
     @Test

@@ -33,7 +33,7 @@ public class JuiceShopIncorrectLoginTest extends BaseTest{
 
     @AfterClass
     public void tearDown() {
-        WebdriverRunner.closeWebdriver();
+        WebdriverRunner.closeWebDriver();
     }
 
     @Test

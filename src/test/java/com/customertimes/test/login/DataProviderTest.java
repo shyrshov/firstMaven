@@ -1,6 +1,6 @@
 package com.customertimes.test.login;
 
-import com.customertimes.dataprovider.DataProviderClass;
+import com.customertimes.testData.DataProviderClass;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 

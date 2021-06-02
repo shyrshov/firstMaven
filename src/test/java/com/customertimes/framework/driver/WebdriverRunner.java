@@ -8,7 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class WebdriverRunner {
 
-    private static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     private WebdriverRunner () {
 
@@ -33,7 +33,7 @@ public class WebdriverRunner {
         return driver.get();
     }
 
-    public static void closeWebdriver() {
+    public static void closeWebDriver() {
         if (driver.get() != null) {
             driver.get().quit();
             driver.remove();
