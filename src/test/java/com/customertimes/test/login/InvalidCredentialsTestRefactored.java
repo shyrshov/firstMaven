@@ -36,10 +36,6 @@ public class InvalidCredentialsTestRefactored extends BaseTest{
 
     }
 
-    @AfterClass
-    public void tearDown() {
-        WebdriverRunner.closeWebDriver();
-    }
 
     @Test(dataProvider = "credentials")
     public void userFillIncorrectCredentialsToLoginForm(String email, String password) {

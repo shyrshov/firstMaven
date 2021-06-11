@@ -35,11 +35,6 @@ public class JuiceShopLoginTest extends BaseTest {
 
     }
 
-    @AfterClass
-    public void tearDown() {
-        WebdriverRunner.closeWebDriver();
-    }
-
     @Test
     public void userCanLoginToJuiceShop() throws InterruptedException {
 

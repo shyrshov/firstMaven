@@ -12,7 +12,6 @@ public class BaseTest {
 
     @BeforeSuite
     public void setup() {
-        driver = WebdriverRunner.getWebDriver();
         System.out.println("This is before suite");
     }
 
@@ -24,6 +23,7 @@ public class BaseTest {
 
     @BeforeClass
     public void beforeClassBaseTest() {
+        driver = WebdriverRunner.getWebDriver();
         System.out.println("This is before class in the BaseTest");
     }
 }

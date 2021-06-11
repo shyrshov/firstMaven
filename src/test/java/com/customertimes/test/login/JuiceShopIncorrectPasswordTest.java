@@ -31,11 +31,6 @@ public class JuiceShopIncorrectPasswordTest extends BaseTest {
         invalidCredentialsErrorText = "Invalid email or password.";
     }
 
-    @AfterClass
-    public void tearDown() {
-        WebdriverRunner.closeWebDriver();
-    }
-
     @Test
     public void userFillIncorrectPasswordToLoginForm() throws InterruptedException {
 

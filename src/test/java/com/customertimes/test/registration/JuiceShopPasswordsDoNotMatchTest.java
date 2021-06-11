@@ -39,11 +39,6 @@ public class JuiceShopPasswordsDoNotMatchTest extends BaseTest{
 
     }
 
-    @AfterClass
-    public void tearDown() {
-        WebdriverRunner.closeWebDriver();
-    }
-
     @Test
     public void userFillDifferentPasswordsToSignUpForm() {
 

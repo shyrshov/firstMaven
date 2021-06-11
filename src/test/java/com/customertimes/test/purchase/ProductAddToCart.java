@@ -44,10 +44,8 @@ public class ProductAddToCart extends BaseTest {
     }
 
     @AfterClass
-    public void tearDown() {
-
+    public void tearDownClass() {
         getWebDriver().findElement(By.cssSelector("[data-icon='trash-alt']")).click();
-        WebdriverRunner.closeWebDriver();
     }
 
     @Test

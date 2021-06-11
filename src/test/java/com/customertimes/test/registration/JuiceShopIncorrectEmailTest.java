@@ -35,11 +35,6 @@ public class JuiceShopIncorrectEmailTest extends BaseTest {
 
     }
 
-    @AfterClass
-    public void tearDown() {
-        WebdriverRunner.closeWebDriver();
-    }
-
     @Test
     public void userFillIncorrectEmailToSignUpForm() {
 

@@ -41,11 +41,6 @@ public class VerifyProductInformation extends BaseTest {
 
     }
 
-    @AfterClass
-    public void tearDown() {
-        WebdriverRunner.closeWebDriver();
-    }
-
     @Test
     public void userCanOpenProductInformation() throws InterruptedException {
 

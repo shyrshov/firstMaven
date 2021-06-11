@@ -43,11 +43,6 @@ public class JuiceShopSignUpTest extends BaseTest {
         customer = Customer.newBuilder().withName(testData.getIncorrectUserEmail()).withPassword(testData.getIncorrectUserPassword()).build();
     }
 
-    @AfterClass
-    public void tearDown() {
-        WebdriverRunner.closeWebDriver();
-    }
-
     @Test
     public void userCanSignUpToJuiceShop() {
 
