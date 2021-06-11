@@ -23,8 +23,16 @@ public class WebdriverRunner {
         if (driver.get() == null) {
             switch (TestConfig.CONFIG.browser()) {
                 case "firefox": {
-                    WebDriverManager.firefoxdriver().setup();
-                    driver.set(new FirefoxDriver());
+                    if (TestConfig.CONFIG.remote()) {
+                        try {
+                            driver.set(new RemoteWebDriver(new URL(TestConfig.CONFIG.seleniumServerUrl()), DesiredCapabilities.firefox()));
+                        } catch (MalformedURLException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        WebDriverManager.firefoxdriver().setup();
+                        driver.set(new FirefoxDriver());
+                    }
                     break;
                 }
                 default: {
@@ -38,8 +46,6 @@ public class WebdriverRunner {
                         WebDriverManager.chromedriver().setup();
                         driver.set(new ChromeDriver());
                     }
-                    WebDriverManager.chromedriver().setup();
-                    driver.set(new ChromeDriver());
                 }
             }
 
