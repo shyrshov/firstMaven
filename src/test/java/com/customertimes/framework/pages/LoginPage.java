@@ -19,7 +19,7 @@ public class LoginPage extends AbstractPage {
 
     @Override
     public void openPage() {
-        driver.get("url/login");
+        driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
     }
 
     public void clickOnAccountButton() {

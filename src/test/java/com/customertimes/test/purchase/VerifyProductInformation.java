@@ -35,7 +35,7 @@ public class VerifyProductInformation extends BaseTest {
         softAssert = new SoftAssert();
         wait = new WebDriverWait(getWebDriver(), 5);
         product = product.newBuilder().withTitle("Banana Juice (1000ml)").withDescription("Monkeys love it the most.").withPrice("1.99¤").build();
-        driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
+        loginPage.openPage();
         wait.until(ExpectedConditions.visibilityOf(getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']"))));
         driver.findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
 

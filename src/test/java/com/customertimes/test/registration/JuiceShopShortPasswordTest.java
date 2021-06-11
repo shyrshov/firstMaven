@@ -29,14 +29,13 @@ public class JuiceShopShortPasswordTest extends BaseTest{
 
     @BeforeClass
     public void setupDataToJuiceShop() {
-        driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
         wait = new WebDriverWait(driver, 5);
         loginPage = new LoginPage(driver);
         registrationPage = new RegistrationPage(driver);
         testData = new TestData();
-
+        registrationPage.openPage();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
     }
 
     @Test

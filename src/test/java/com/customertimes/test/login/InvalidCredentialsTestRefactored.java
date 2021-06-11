@@ -26,13 +26,13 @@ public class InvalidCredentialsTestRefactored extends BaseTest{
 
     @BeforeClass
     public void setupDataToJuiceShop() {
-        driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
+        loginPage = new LoginPage(driver);
+        testData = new TestData();
+        loginPage.openPage();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
         wait = new WebDriverWait(driver, 5);
         customer = Customer.newBuilder().withName("andrii@gmail.com").withPassword("123456789").build();
-        loginPage = new LoginPage(driver);
-        testData = new TestData();
 
     }
 
@@ -57,9 +57,6 @@ public class InvalidCredentialsTestRefactored extends BaseTest{
     public Object[][] credentials() {
         return new Object[][]{
                 {
-
-                    //Дима сказал что для наборов тестовых данных не обьязательно делать PageObject,
-                        // но я решил таким образом, для лучшей практики
                         customer.getEmail(),
                         testData.getIncorrectUserPassword()
                 },

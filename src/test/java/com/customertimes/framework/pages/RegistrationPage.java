@@ -18,7 +18,7 @@ public class RegistrationPage extends AbstractPage {
 
     @Override
     public void openPage() {
-        driver.get("url/register");
+        driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
     }
 
     public void enterEmail(String email) {

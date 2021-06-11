@@ -26,12 +26,13 @@ public class JuiceShopLoginTest extends BaseTest {
 
     @BeforeClass
     public void setupDataToJuiceShop() {
-        driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
+        loginPage = new LoginPage(driver);
+        loginPage.openPage();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
         wait = new WebDriverWait(driver, 5);
         customer = Customer.newBuilder().withName("andrii@gmail.com").withPassword("123456789").build();
-        loginPage = new LoginPage(driver);
+
 
     }
 

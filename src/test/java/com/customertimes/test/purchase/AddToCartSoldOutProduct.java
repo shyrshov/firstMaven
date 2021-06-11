@@ -37,7 +37,7 @@ public class AddToCartSoldOutProduct extends BaseTest {
         customer = Customer.newBuilder().withName("andrii@gmail.com").withPassword("123456789").build();
         js = (JavascriptExecutor) getWebDriver();
         wait = new WebDriverWait(getWebDriver(), 5);
-        driver.get("http://beeb0b73705f.sn.mynetname.net:3000/");
+        loginPage.openPage();
         wait.until(ExpectedConditions.visibilityOf(getWebDriver().findElement(By.cssSelector("button[aria-label='Close Welcome Banner']"))));
         driver.findElement(By.cssSelector("button[aria-label='Close Welcome Banner']")).click();
 
