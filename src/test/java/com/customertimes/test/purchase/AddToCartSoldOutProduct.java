@@ -54,9 +54,9 @@ public class AddToCartSoldOutProduct extends BaseTest {
 
         loginPage.clickOnLoginButton();
 
-        productListPage.waitForProductListLoad();
-
         productListPage.closeCookieAlert();
+
+        productListPage.waitForProductListLoad();
 
         productListPage.moveToNextPage();
 
