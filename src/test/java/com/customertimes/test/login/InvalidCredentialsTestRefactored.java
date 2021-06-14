@@ -38,15 +38,19 @@ public class InvalidCredentialsTestRefactored extends BaseTest{
 
 
     @Test(dataProvider = "credentials")
-    public void userFillIncorrectCredentialsToLoginForm(String email, String password) {
+    public void userFillIncorrectCredentialsToLoginForm(String email, String password) throws InterruptedException {
 
         loginPage.navigateToLoginPage();
+        Thread.sleep(2000);
 
         loginPage.enterEmail(email);
+        Thread.sleep(2000);
 
         loginPage.enterPassword(password);
+        Thread.sleep(2000);
 
         loginPage.clickOnLoginButton();
+        Thread.sleep(2000);
 
         String invalidCredentialsErrorActualText = loginPage.getInvalidCredentialsErrorActualText(testData.getInvalidCredentialsErrorText());
 
