@@ -6,6 +6,9 @@ import com.customertimes.framework.pages.ProductListPage;
 import com.customertimes.model.Customer;
 import com.customertimes.test.BaseTest;
 import com.customertimes.testData.TestData;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,7 +20,8 @@ import org.testng.asserts.SoftAssert;
 
 import static com.customertimes.framework.driver.WebdriverRunner.getWebDriver;
 
-
+@Epic("Purchase process")
+@Story("Add to cart")
 public class AddToCartSoldOutProduct extends BaseTest {
 
     LoginPage loginPage;
@@ -44,6 +48,7 @@ public class AddToCartSoldOutProduct extends BaseTest {
     }
 
     @Test
+    @Description("Add to cart products not in stock")
     public void userCantAddSoldOutProductToCart() {
 
         loginPage.navigateToLoginPage();

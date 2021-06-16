@@ -7,6 +7,9 @@ import com.customertimes.model.Customer;
 import com.customertimes.model.Product;
 import com.customertimes.test.BaseTest;
 import com.customertimes.testData.TestData;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,6 +20,8 @@ import org.testng.asserts.SoftAssert;
 
 import static com.customertimes.framework.driver.WebdriverRunner.getWebDriver;
 
+@Epic("Purchase process")
+@Story("Product list")
 public class VerifyProductInformation extends BaseTest {
 
     LoginPage loginPage;
@@ -42,6 +47,7 @@ public class VerifyProductInformation extends BaseTest {
     }
 
     @Test
+    @Description("Product info verification")
     public void userCanOpenProductInformation() throws InterruptedException {
 
         productListPage.clickProduct(product.getTitle());

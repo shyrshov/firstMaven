@@ -6,6 +6,9 @@ import com.customertimes.framework.pages.LoginPage;
 import com.customertimes.model.Customer;
 import com.customertimes.test.BaseTest;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
 import org.openqa.selenium.By;
 
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,6 +20,8 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
+@Epic("Sign in/Sign up")
+@Story("Login")
 public class JuiceShopLoginTest extends BaseTest {
 
     WebDriverWait wait;
@@ -37,6 +42,7 @@ public class JuiceShopLoginTest extends BaseTest {
     }
 
     @Test
+    @Description("Login with valid credentials")
     public void userCanLoginToJuiceShop() throws InterruptedException {
 
         loginPage.navigateToLoginPage();

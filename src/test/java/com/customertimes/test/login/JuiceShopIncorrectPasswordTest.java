@@ -2,6 +2,9 @@ package com.customertimes.test.login;
 
 import com.customertimes.framework.driver.WebdriverRunner;
 import com.customertimes.test.BaseTest;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,6 +16,8 @@ import org.testng.annotations.Test;
 
 import static com.customertimes.framework.driver.WebdriverRunner.getWebDriver;
 
+@Epic("Sign in/Sign up")
+@Story("Login")
 public class JuiceShopIncorrectPasswordTest extends BaseTest {
 
     String userEmail;
@@ -32,6 +37,7 @@ public class JuiceShopIncorrectPasswordTest extends BaseTest {
     }
 
     @Test
+    @Description("Login with invalid  password")
     public void userFillIncorrectPasswordToLoginForm() throws InterruptedException {
 
         getWebDriver().findElement(By.id("navbarAccount")).click();

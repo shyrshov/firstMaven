@@ -6,6 +6,9 @@ import com.customertimes.framework.pages.RegistrationPage;
 import com.customertimes.model.Customer;
 import com.customertimes.test.BaseTest;
 import com.customertimes.testData.TestData;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -20,6 +23,8 @@ import java.util.concurrent.TimeUnit;
 
 import static com.customertimes.framework.driver.WebdriverRunner.getWebDriver;
 
+@Epic("Sign in/Sign up")
+@Story("Registration")
 public class JuiceShopSignUpTest extends BaseTest {
 
     LoginPage loginPage;
@@ -44,6 +49,7 @@ public class JuiceShopSignUpTest extends BaseTest {
     }
 
     @Test
+    @Description("Registration with valid email and password")
     public void userCanSignUpToJuiceShop() {
 
         loginPage.navigateToLoginPage();

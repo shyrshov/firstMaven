@@ -5,6 +5,9 @@ import com.customertimes.framework.pages.LoginPage;
 import com.customertimes.model.Customer;
 import com.customertimes.test.BaseTest;
 import com.customertimes.testData.TestData;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Story;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -16,6 +19,8 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
+@Epic("Sign in/Sign up")
+@Story("Login")
 public class InvalidCredentialsTestRefactored extends BaseTest{
 
     Customer customer;
@@ -38,19 +43,16 @@ public class InvalidCredentialsTestRefactored extends BaseTest{
 
 
     @Test(dataProvider = "credentials")
+    @Description("Login with invalid credentials refactored")
     public void userFillIncorrectCredentialsToLoginForm(String email, String password) throws InterruptedException {
 
         loginPage.navigateToLoginPage();
-        Thread.sleep(2000);
 
         loginPage.enterEmail(email);
-        Thread.sleep(2000);
 
         loginPage.enterPassword(password);
-        Thread.sleep(2000);
 
         loginPage.clickOnLoginButton();
-        Thread.sleep(2000);
 
         String invalidCredentialsErrorActualText = loginPage.getInvalidCredentialsErrorActualText(testData.getInvalidCredentialsErrorText());
 
