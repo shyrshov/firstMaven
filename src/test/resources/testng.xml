@@ -7,6 +7,10 @@
     <test name="Regression">
         <packages>
             <package name="com.customertimes.test.purchase.*" >
+            </package>
+            <package name="com.customertimes.test.registration.*" >
+            </package>
+            <package name="com.customertimes.test.login.*" >
             <exclude name="com.customertimes.test.login.mfa.*"/>
             </package>
         </packages>
